@@ -59,12 +59,14 @@ def dm02_show_iris():
     print(iris_df)
 
     # 4.通过Seaborn绘制散点图
+    # 参1：数据集 参2：x轴 参3：y轴 参4：分组字段 参5：是否显示拟合线
     sns.lmplot(data=iris_df, x='sepal length (cm)', y='sepal width (cm)', hue='label',
                fit_reg=False)  # data数据，hue按照标签分类，fitreg是否绘制拟合线
 
     # 5.设置标题，显示
     plt.title('iris data')
     plt.show()
+
 
 # 3.
 
