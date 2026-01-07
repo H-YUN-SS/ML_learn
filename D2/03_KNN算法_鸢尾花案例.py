@@ -48,14 +48,23 @@ def dm01_load_iris():
 def dm02_show_iris():
     # 1.加载数据集
     iris_data = load_iris()
-    # 2.把鸢尾花数据集封装成 DataFrame 对象. （因为cable可视化需要dataframe对象才能可视化
+
+    # 2.把鸢尾花数据集封装成 DataFrame 对象. （因为Seaborn可视化需要dataframe对象才能可视化
     # iris_df=pd.DataFrame(iris_data.data)
     iris_df = pd.DataFrame(iris_data.data, columns=iris_data.feature_names)
     # print(f'具体的数据:{iris_data.data}')
+
     # 3.给df对象新增一列->标签列
-    iris_df['label']=iris_data.target
+    iris_df['label'] = iris_data.target
     print(iris_df)
 
+    # 4.通过Seaborn绘制散点图
+    sns.lmplot(data=iris_df, x='sepal length (cm)', y='sepal width (cm)', hue='label',
+               fit_reg=False)  # data数据，hue按照标签分类，fitreg是否绘制拟合线
+
+    # 5.设置标题，显示
+    plt.title('iris data')
+    plt.show()
 
 # 3.
 
