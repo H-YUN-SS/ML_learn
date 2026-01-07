@@ -20,7 +20,7 @@ from sklearn.metrics import accuracy_score  # 模型评估的，计算模型预�
 
 
 # 1.定义函数，加载鸢尾花数据集，并查看数据集
-def dm01_loadiris():
+def dm01_load_iris():
     # 1.加载鸢尾花数据集.
     iris_data = load_iris()
     # 2.查看数据集
@@ -29,9 +29,10 @@ def dm01_loadiris():
     # 3.查看数据集所有的键
     print(f'数据集所有的键:{iris_data.keys()}')
     # 4.查看数据集的键对应的值
-    # print(f'具体的数据:{iris_data.data}')
-    print(f'具体的数据:{iris_data.data[:5]}')  # 有150条数据，每条四个特征，我们只看前五条
-    print(f'具体的标签:{iris_data.target[:5]}')  # 有150条数据，每条一个标签，我们只看前五条
+    # print(f'具体的数据:{iris_data.data[:5]}')  # 有150条数据，每条四个特征，我们只看前五条
+    print(f'具体的数据:{iris_data.data}')
+    # print(f'具体的标签:{iris_data.target[:5]}')  # 有150条数据，每条一个标签，我们只看前五条
+    print(f'具体的标签:{iris_data.target}')
     print(f'标签对应的名称:{iris_data.target_names}')  # ['setosa' 'versicolor' 'virginica']
     print(
         f'特征对应的名称:{iris_data.feature_names}')  # ['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']
@@ -41,12 +42,25 @@ def dm01_loadiris():
     print(f'数据集的形状:{iris_data.data.shape}')  # (150, 4)
     print(f'数据集的模型（在哪个包下）:{iris_data.data_module}')  # sklearn.datasets.data
 
+    # 2.定义函数，绘制数据集的散点图.
 
-# 2.
+
+def dm02_show_iris():
+    # 1.加载数据集
+    iris_data = load_iris()
+    # 2.把鸢尾花数据集封装成 DataFrame 对象. （因为cable可视化需要dataframe对象才能可视化
+    # iris_df=pd.DataFrame(iris_data.data)
+    iris_df = pd.DataFrame(iris_data.data, columns=iris_data.feature_names)
+    # print(f'具体的数据:{iris_data.data}')
+    # 3.给df对象新增一列->标签列
+    iris_df['label']=iris_data.target
+    print(iris_df)
+
 
 # 3.
 
 # 4.
 # 5.测试
 if __name__ == '__main__':
-    dm01_loadiris()
+    dm01_load_iris()
+    dm02_show_iris()
