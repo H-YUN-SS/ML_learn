@@ -44,3 +44,5 @@ x_train_new = scaler.fit_transform(x_train)
 # 4.打印处理后的数据
 print('归一化的数据集为：\n')
 print(x_train_new)
+
+
