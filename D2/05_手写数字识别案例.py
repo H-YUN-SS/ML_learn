@@ -6,6 +6,7 @@
 """
 import matplotlib.pyplot as plt
 import pandas as pd
+from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 import joblib
@@ -43,7 +44,38 @@ def show_digit(idx):
     plt.show()
 
 
-# 2.
+# 2.定义函数，训练模型，并保存训练好的模型
+def train_model():
+    # 1.加载数据集
+    df = pd.read_csv('./data/手写数字识别.csv')
+    # 2.数据的预处理
+    # 2.1 拆分出特征列
+    x = df.iloc[:, 1:]  # 特征列
+    # 2.2 拆分出标签列
+    y = df.iloc[:, 0]  # 标签列
+    # 2.3 打印特征和标签的形状
+    print(f'x的形状:{x.shape}')  # x的形状:(42000, 784)
+    print(f'y的形状:{y.shape}')  # y的形状:(42000,)       →(42000,1)
+    print(f'查看所有的标签的分布情况{Counter(y)}')
+    # 2.4 对特征列（拆分前）进行归一化
+    x = x / 250
+    # 2.5 拆分训练集和测试集合
+    # 参1：特征列  参2：标签列  参3：测试集的比例  参4：随机种子 参5：参考y轴进行抽取，保持标签的比例（数据均衡）
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=23, stratify=y)
+
+    # 3.模型训练
+    # 3.1 创建模型对象
+    estimator = KNeighborsClassifier(n_neighbors=3)
+    # 3.2 模型训练
+    estimator.fit(x_train, y_train)
+    # 4.模型评估
+    print(f'准确率{estimator.score(x_test, y_test)}')
+    print(f'准确率{accuracy_score(y_test, estimator.predict(x_test))}')
+
+    # 5.保存模型
+    # 参1：模型对象 参2：模型保存的路径
+    joblib.dump(estimator, './model/手写数字识别.pkl')  # pickle文件 ：python(Pandas)独有的文件类型==pth
+    print('模型保存成功！')
 
 
 # 3.
@@ -51,4 +83,7 @@ def show_digit(idx):
 
 # 4.测试
 if __name__ == '__main__':
-    show_digit(23)
+    # 展示数字
+    # show_digit(23)
+    # 训练模型，并保存模型
+    train_model()
