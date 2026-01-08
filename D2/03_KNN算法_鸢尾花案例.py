@@ -42,9 +42,8 @@ def dm01_load_iris():
     print(f'数据集的形状:{iris_data.data.shape}')  # (150, 4)
     print(f'数据集的模型（在哪个包下）:{iris_data.data_module}')  # sklearn.datasets.data
 
-    # 2.定义函数，绘制数据集的散点图.
 
-
+# 2.定义函数，绘制数据集的散点图.
 def dm02_show_iris():
     # 1.加载数据集
     iris_data = load_iris()
@@ -68,10 +67,41 @@ def dm02_show_iris():
     plt.show()
 
 
-# 3.
+# 3.定义函数，切分训练集和测试集.
+def dm03_split_train_test():
+    # 1.加载数据集
+    iris_data = load_iris()
+    # 2.数据的预处理：从150个特征和标签中，安装 8:2的比例切分训练集和测试集.
+    # 参1：特征数据 参2：标签数据 参3：测试集合比例（满是1 测试集是0.2 训练集就是0.8） 参4：随机种子 种子一定则固定（默认种子为当前时间的毫秒值）
+    # 返回值为元组：训练集的特征数据，测试集的特征数据，训练集的标签数据，测试集的标签数据.
+    x_train, x_test, y_train, y_test = train_test_split(iris_data.data, iris_data.target,
+                                                        test_size=0.2, random_state=23)
+    # 3.打印切割后的结果：
+    print(f'训练集的特征：{x_train},个数:{len(x_train)}')  # 120条，每条四列（特征）
+    print(f'训练集的标签：{y_train},个数:{len(y_train)}')  # 120条，每条一列（标签）
+    print(f'测试集的特征：{x_test},个数:{len(x_test)}')  # 30条，每条4列（特征）
+    print(f'测试集的标签：{y_test},个数:{len(y_test)}')  # 30条，每条1列（标签）
 
-# 4.
+
+# 4.定义函数，实现鸢尾花完整案例 → 加载数据，数据预处理，特征工程，模型训练，模型评估，模型预测
+def dm04_iris_evaluate_test():
+    # 1.加载数据集
+    iris_data = load_iris()
+    # 2．数据的预处理．这里是把150条数据，按照8：2的比例，切分训练集和测试集
+    x_train, y_train, x_test, y_test = train_test_split(iris_data.data, iris_data.target, test_size=0.2,
+                                                        random_state=23)
+
+    # 3．特征工程(提取，预处理…)
+    # 4．模型训练．
+    # 5．模型评估．
+    # 6．模型预测．
+
+
 # 5.测试
 if __name__ == '__main__':
+    """
     dm01_load_iris()
     dm02_show_iris()
+    dm03_split_train_test()
+    """
+    dm04_iris_evaluate_test()
