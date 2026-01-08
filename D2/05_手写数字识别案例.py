@@ -4,6 +4,8 @@
 每张图片都是由 28 * 28 像素组成的, 即: 我们的csv文件中每一行都有 784 个像素点, 表示图片(每个像素)的 颜色。
 最终构成图像。
 """
+import warnings
+
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.metrics import accuracy_score
@@ -11,6 +13,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 import joblib
 from collections import Counter
+
+# 扩展：忽略警告
+warnings.filterwarnings('ignore', module='sklearn')  # 参1：忽略警告 参2：忽略的模块
 
 
 # 1.定义函数，接收用户传入的索引，展示该索引对应的图片
@@ -58,7 +63,7 @@ def train_model():
     print(f'y的形状:{y.shape}')  # y的形状:(42000,)       →(42000,1)
     print(f'查看所有的标签的分布情况{Counter(y)}')
     # 2.4 对特征列（拆分前）进行归一化
-    x = x / 250
+    x = x / 255
     # 2.5 拆分训练集和测试集合
     # 参1：特征列  参2：标签列  参3：测试集的比例  参4：随机种子 参5：参考y轴进行抽取，保持标签的比例（数据均衡）
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=23, stratify=y)
@@ -78,7 +83,27 @@ def train_model():
     print('模型保存成功！')
 
 
-# 3.
+# 3.定义函数，测试模型
+def use_model():
+    # 1.加载图片
+    x = plt.imread('./data/demo.png')
+    # 2.绘制图片
+    # plt.imshow(x, cmap='gray')
+    # plt.axis('off')  # 不显示坐标轴
+    # plt.show()
+    # 3.加载模型
+    estimator = joblib.load('./model/手写数字识别.pkl')
+    # 4.模型预测
+    # 4.1 查看 数据集转换
+    # print(x.shape)  # (28, 28)
+    # print(x.reshape(1, 784).shape)  # (1, 784)
+    # print(x.reshape(1, -1).shape)  # (1, 784)
+    # 4.2 具体的转换动作,记得：归一化
+    x = x.reshape((1, -1)) / 255
+    # 4.3 模型预测
+    y_pre = estimator.predict(x)
+    # 5.打印预测结果
+    print(f'预测值为{y_pre}')
 
 
 # 4.测试
@@ -86,4 +111,5 @@ if __name__ == '__main__':
     # 展示数字
     # show_digit(23)
     # 训练模型，并保存模型
-    train_model()
+    # train_model()
+    use_model()
