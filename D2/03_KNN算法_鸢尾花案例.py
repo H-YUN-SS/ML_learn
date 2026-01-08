@@ -137,9 +137,10 @@ def dm04_iris_evaluate_test():
 
 # 5.测试
 if __name__ == '__main__':
-    """
+
     dm01_load_iris()
     dm02_show_iris()
     dm03_split_train_test()
-    """
     dm04_iris_evaluate_test()
+
+
