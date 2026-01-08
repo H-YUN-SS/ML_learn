@@ -88,14 +88,52 @@ def dm04_iris_evaluate_test():
     # 1.加载数据集
     iris_data = load_iris()
     # 2．数据的预处理．这里是把150条数据，按照8：2的比例，切分训练集和测试集
-    x_train, y_train, x_test, y_test = train_test_split(iris_data.data, iris_data.target, test_size=0.2,
+    x_train, x_test, y_train, y_test = train_test_split(iris_data.data, iris_data.target, test_size=0.2,
                                                         random_state=23)
 
     # 3．特征工程(提取，预处理…)
-    # 4．模型训练．
-    # 5．模型评估．
-    # 6．模型预测．
+    # 思考1：特征提取：因为源数据只有4个特征列，且都是我们用的，所以无需进行特征提取
+    # 思考2：特征预处理：因为源数据四列特征差值不大，所以我们无需做特征预处理，但是加入特征预处理会让我们代码更完善，所以加入
+    # 3.1创建标准化对象
+    transfer = StandardScaler()
+    # 3.2 对特征列进行标准化，即：x_train:特征集的特征数据，x_test：测试集的特征数据
+    # fit_transform:兼具fit和transform的功能，即：训练，转换，该函数适用于:第一次进行标准化时使用，一般用于处理：训练集 对训练集进行特征预处理，返回值：训练集的特征数据.
+    x_train = transfer.fit_transform(x_train)
+    # x_test=transfer.fit_transform(x_test)
+    # transform：只有转换，该函数适用于：重复进行标准化动作时使用，一般用于对训练集进行标准化。
+    x_test = transfer.transform(x_test)
 
+    # 4．模型训练．
+    # 4.1 创建模型对象
+    estimator = KNeighborsClassifier(n_neighbors=3)
+    # 4.2 具体的训练模型的动作.
+    estimator.fit(x_train, y_train)  # 传入：训练集特征，训练集的标签数据
+    # 5．模型评估．
+    # 场景1：对刚才切分的测试集（30条）进行测试
+    # 5.1 直接预测即可，获取到：育才结果
+    y_pre = estimator.predict((x_test))  # x_test：测试集的特征数据
+    # 5.2 打印预测结果.
+    print(f'预测值为：{y_pre}')
+
+    # 场景2：对新的数据集（源数据150条之外的数据）进行测试
+
+    # 5.1 自定义测试数据集.
+    my_data = [[7.8, 2.1, 3.9, 1.6]]
+    # 5.2 对数据集进行标准化处理
+    my_data = transfer.transform(my_data)
+    # 5.3 模型预测
+    y_pre_new = estimator.predict(((my_data)))
+    print(f'预测值为：{y_pre_new}')
+    # 5.4查看上述数据集，每种分类的预测概率.
+    y_pre_proba = estimator.predict_proba(my_data)
+    print(
+        f'(各分类)预测概率为：{y_pre_proba}')  # (各分类)预测概率为：[[0.         0.66666667 0.33333333]] -> 0分类的概率 1分类的概率 2分类的概率
+
+    # 6．模型评估．
+    # 方式1：直接评分，基于：测试集的特征和测试集的标签。
+    print(f'正确率(准确率)：{estimator.score(x_test,y_test)}')
+    # 方式2基于 测试集的标签 和 预测结果进行评分
+    print(f'正确率(准确率)：{accuracy_score(y_test,y_pre)}')
 
 # 5.测试
 if __name__ == '__main__':
