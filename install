@@ -1,0 +1,17 @@
+[33mcommit 634ed4737cca7e072fa7899d1427048fd8617623[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: H-YUN-SS <920563885@qq.com>
+Date:   Thu Jan 8 21:33:05 2026 +0800
+
+    Add model file with Git LFS
+
+ ...13\345\206\231\346\225\260\345\255\227\350\257\206\345\210\253.pkl" | 3 [32m+++[m
+ 1 file changed, 3 insertions(+)
+
+[33mcommit b2397ba0d5daba9413cfc56d26bb740646ee1b72[m
+Author: H-YUN-SS <920563885@qq.com>
+Date:   Thu Jan 8 21:32:26 2026 +0800
+
+    Add .gitattributes for Git LFS
+
+ .gitattributes | 1 [32m+[m
+ 1 file changed, 1 insertion(+)
