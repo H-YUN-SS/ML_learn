@@ -63,10 +63,10 @@ def train_model():
     print(f'y的形状:{y.shape}')  # y的形状:(42000,)       →(42000,1)
     print(f'查看所有的标签的分布情况{Counter(y)}')
     # 2.4 对特征列（拆分前）进行归一化
-    x = x / 255
+    x = x
     # 2.5 拆分训练集和测试集合
     # 参1：特征列  参2：标签列  参3：测试集的比例  参4：随机种子 参5：参考y轴进行抽取，保持标签的比例（数据均衡）
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=23, stratify=y)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=22, stratify=y)
 
     # 3.模型训练
     # 3.1 创建模型对象
@@ -99,7 +99,7 @@ def use_model():
     # print(x.reshape(1, 784).shape)  # (1, 784)
     # print(x.reshape(1, -1).shape)  # (1, 784)
     # 4.2 具体的转换动作,记得：归一化
-    x = x.reshape((1, -1)) / 255
+    x = x.reshape((1, -1)) 
     # 4.3 模型预测
     y_pre = estimator.predict(x)
     # 5.打印预测结果
@@ -111,5 +111,5 @@ if __name__ == '__main__':
     # 展示数字
     # show_digit(23)
     # 训练模型，并保存模型
-    # train_model()
+    #train_model()
     use_model()
