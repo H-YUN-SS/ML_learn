@@ -99,7 +99,7 @@ def use_model():
     # print(x.reshape(1, 784).shape)  # (1, 784)
     # print(x.reshape(1, -1).shape)  # (1, 784)
     # 4.2 具体的转换动作,记得：归一化
-    x = x.reshape((1, -1)) 
+    x = x.reshape((1, -1))
     # 4.3 模型预测
     y_pre = estimator.predict(x)
     # 5.打印预测结果
@@ -111,5 +111,5 @@ if __name__ == '__main__':
     # 展示数字
     # show_digit(23)
     # 训练模型，并保存模型
-    #train_model()
+    # train_model()
     use_model()
